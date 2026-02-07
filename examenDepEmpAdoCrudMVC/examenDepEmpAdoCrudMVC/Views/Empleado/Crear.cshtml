@@ -1,0 +1,71 @@
+﻿@*
+    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
+*@
+
+@model examenDepEmpAdoCrudMVC.Models.Empleado
+@{
+    ViewData["Title"] = "Crear Empleado";
+}
+
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-6 col-lg-5">
+            <div class="card shadow-sm border-0">
+                <div class="card-header bg-success text-white py-3">
+                    <h5 class="card-title mb-0">
+                        <i class="bi bi-person-plus-fill me-2"></i>Registrar Nuevo Empleado
+                    </h5>
+                </div>
+                <div class="card-body p-4">
+                    <form asp-action="Crear" method="post">
+                        
+                        <div class="mb-3">
+                            <label asp-for="NombreEmpleado" class="form-label fw-bold">Nombre Completo</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-person"></i></span>
+                                <input asp-for="NombreEmpleado"
+                                       class="form-control"
+                                       placeholder="Nombre del empleado"
+                                       required
+                                       oninvalid="this.setCustomValidity('Por favor, ingresa el nombre del empleado')"
+                                       oninput="this.setCustomValidity('')" />
+                            </div>
+                            <span asp-validation-for="NombreEmpleado" class="text-danger small"></span>
+                        </div>
+
+                        <div class="mb-4">
+                            <label class="form-label fw-bold">Departamento</label>
+                            <div class="input-group">
+                                <span class="input-group-text"><i class="bi bi-building"></i></span>
+                                <select name="ReferenciaDepartamento.IdDepartamento" class="form-select" required>
+                                    <option value="" selected disabled>-- Seleccione un área --</option>
+                                    @foreach (var dep in (ViewBag.Departamentos as List<examenDepEmpAdoCrudMVC.Models.Departamento> ?? new List<examenDepEmpAdoCrudMVC.Models.Departamento>()))
+                                    {
+                                        <option value="@dep.IdDepartamento">@dep.NombreDepartamento</option>
+                                    }
+                                </select>
+                            </div>
+                        </div>
+
+                        <div class="d-grid gap-2">
+                            <button type="submit" class="btn btn-success py-2">
+                                <i class="bi bi-save"></i> Guardar Empleado
+                            </button>
+                            <a asp-action="Index" class="btn btn-outline-secondary py-2">
+                                <i class="bi bi-arrow-left"></i> Cancelar y Volver
+                            </a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            
+            <div class="text-center mt-3">
+                <small class="text-muted">El empleado se registrará con estado <b>Activo</b> por defecto.</small>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
